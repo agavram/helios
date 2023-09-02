@@ -1,0 +1,65 @@
+p {
+  padding: 6px 0;
+}
+
+p a {
+  color: theme(colors.slate.400) !important;
+}
+
+.parent {
+  position: relative;
+}
+
+.animate-fade {
+  animation: fade-and-move 500ms forwards;
+}
+
+@keyframes fade-and-move {
+  0% {
+    opacity: 1;
+    max-height: 100vh;
+  }
+  100% {
+    opacity: 0;
+    max-height: 0;
+  }
+}
+
+.comment-enter-active,
+.comment-exit-active {
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.comment-enter,
+.comment-exit-to {
+  transform: translateX(10px);
+  opacity: 0;
+}
+
+.comment-enter {
+  transform: translateX(-10px);
+}
+
+.comment-text-enter-active,
+.comment-text-exit-active {
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.comment-text-enter,
+.comment-text-exit-to {
+  transform: scale(0.9);
+  opacity: 0;
+}
+
+.comment-text-enter {
+  transform: scale(0.9);
+}
+
+code {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+pre {
+  padding: 6px 0;
+}

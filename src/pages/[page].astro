@@ -1,0 +1,75 @@
+---
+import { ErrorItem } from '../components/Errors/ErrorItem';
+import HNStory from '../components/HNStory/HNStory';
+import Layout from '../layouts/Layout.astro';
+import Nav from '../layouts/Nav.astro';
+import {
+  getAskStories,
+  getBestStories,
+  getJobStories,
+  getNewStories,
+  getShowStories,
+  getTopStories,
+  type Response,
+  type StoryId,
+} from '../services/data';
+
+const { page } = Astro.params;
+let stories: Response<StoryId[]>;
+let title = "";
+
+switch (page?.toLowerCase()) {
+  case 'new':
+    stories = await getNewStories();
+    title = "New Stories";
+    break;
+  case 'best':
+    stories = await getBestStories();
+    title = "Best Stories";
+    break;
+  case 'top':
+    stories = await getTopStories();
+    title = "Top Stories";
+    break;
+  case 'ask':
+    stories = await getAskStories();
+    title = "Ask";
+    break;
+  case 'show':
+    stories = await getShowStories();
+    title = "Show";
+    break;
+  case 'jobs':
+    stories = await getJobStories();
+    title = "Jobs";
+    break;
+  default:
+    return Astro.redirect('/404');
+}
+---
+
+<Layout title={title + " | Hacker News"}>
+  <main>
+    <Nav />
+    {
+      stories.data && (
+        <div class="px-4 pb-4 max-w-4xl ml-auto mr-auto">
+          {stories.data.slice(0, 50).map((storyId) => (
+            <div class="pt-4">
+              <HNStory id={storyId} client:visible />
+            </div>
+          ))}
+        </div>
+      )
+    }
+    {
+      stories.error && (
+        <ErrorItem
+          title="An error occurred while loading"
+          message="Please try again later"
+        />
+      )
+    }
+  </main>
+</Layout>
+../components/Errors/ErrorItem

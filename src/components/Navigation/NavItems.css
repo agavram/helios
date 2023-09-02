@@ -1,0 +1,12 @@
+.nav-dropdown-enter-active,
+.nav-dropdown-exit-active {
+  transition: opacity 0.3s, transform 0.3s;
+}
+.nav-dropdown-enter,
+.nav-dropdown-exit-to {
+  transform: scale(0.9);
+  opacity: 0;
+}
+.nav-dropdown-enter {
+  transform: scale(0.9);
+}
