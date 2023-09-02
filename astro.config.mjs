@@ -1,12 +1,14 @@
 import solidJs from "@astrojs/solid-js";
 import tailwind from "@astrojs/tailwind";
-import vercelEdge from '@astrojs/vercel/edge';
+import vercel from '@astrojs/vercel/serverless';
 import { defineConfig } from 'astro/config';
 import serviceWorker from "astrojs-service-worker";
 
 // https://astro.build/config
 export default defineConfig({
-  adapter: vercelEdge(),
+  adapter: vercel({
+    edgeMiddleware: true
+  }),
   integrations: [solidJs(), tailwind(), serviceWorker()],
   output: 'server'
 });

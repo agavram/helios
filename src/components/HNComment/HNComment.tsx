@@ -87,7 +87,7 @@ export default function HNComment(props: HNCommentProps) {
                     setTimeout(() => d(), 300);
                   }} appear>
                     <Show when={isExpanded()} keyed>
-                      <div ref={setText} class="text-gray-200 comment-text break-words"></div>
+                      <div ref={setText} class="text-gray-200 comment-text break-words inline-block"></div>
                     </Show>
                   </TransitionGroup>
                 </div>

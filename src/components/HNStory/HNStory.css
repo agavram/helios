@@ -3,7 +3,7 @@ p {
 }
 
 p a {
-  color: theme(colors.slate.400) !important;
+  color: theme("colors.slate.400") !important;
 }
 
 .parent {
