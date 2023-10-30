@@ -87,7 +87,7 @@ export default function HNComment(props: HNCommentProps) {
                     setTimeout(() => d(), 300);
                   }} appear>
                     <Show when={isExpanded()} keyed>
-                      <div ref={setText} class="text-gray-200 break-words inline-block"></div>
+                      <div ref={setText} class="text-gray-200 inline-block" style={{ "overflow-wrap": "anywhere"}}></div>
                     </Show>
                   </TransitionGroup>
                 </Card>
