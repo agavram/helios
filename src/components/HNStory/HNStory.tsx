@@ -8,6 +8,7 @@ import "./HNStory.css";
 import RetryCard from "../Errors/Retry";
 import { IconArrowBackUp } from "@tabler/icons-solidjs";
 import { TransitionGroup } from "solid-transition-group";
+import Card from "../Elements/Card";
 
 dayjs.extend(relativeTime);
 
@@ -83,7 +84,7 @@ export default function Story({ id, isHeader, rootCommentId }: StoryProps) {
         <Match when={story() && (story().type === "story" || story().type === "job")}>
           <>
             <TransitionGroup name="comment" appear>
-              <div class="dark:bg-poimandres-dark p-2 rounded-lg border border-gray-500 hover:border-gray-50 transition-[border]" >
+              <div class="dark:bg-[#13151a] p-2 rounded-lg border border-gray-500 hover:border-gray-50 transition-[border]" >
                 <div class="pb-2">
                   <a href={url()} class={"text-gray-50 hover:underline break-words mr-2 inline-block " + (isHeader ? "text-lg" : "")}>
                     {story().title}
@@ -103,12 +104,14 @@ export default function Story({ id, isHeader, rootCommentId }: StoryProps) {
             </TransitionGroup>
             <Show when={isHeader && story().type !== "job"}>
               <Show when={rootCommentId}>
-                <div class="dark:bg-poimandres-dark p-2 rounded-lg mt-4 flex items-center gap-2">
-                  <IconArrowBackUp class="inline text-blue-400" />
-                  <a class="text-blue-400 hover:underline hover:cursor-pointer" href={"/story/" + id}>
-                    Showing single thread. View full discussion?
-                  </a>
-                </div>
+                <Card>
+                  <div class="flex items-center gap-2">
+                    <IconArrowBackUp class="inline text-blue-400" />
+                    <a class="text-blue-400 hover:underline hover:cursor-pointer" href={"/story/" + id}>
+                      Showing single thread. View full discussion?
+                    </a>
+                  </div>
+                </Card>
               </Show>
               <HNComments depth={0} comments={comments()} hide={false} />
             </Show>

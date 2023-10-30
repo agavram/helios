@@ -6,6 +6,7 @@ import { useVisibility } from '../Hooks/useVisiblity';
 import HNComments from "./HNComments";
 import RetryCard from "../Errors/Retry";
 import { IconChevronsRight, IconX } from "@tabler/icons-solidjs";
+import Card from "../Elements/Card";
 
 export interface HNCommentProps {
   depth: number;
@@ -46,8 +47,6 @@ export default function HNComment(props: HNCommentProps) {
     }
   });
 
-  const leftMargin = (props.depth * 12) + "px";
-
   const enterThread = () => {
     const url = new URL(window.location.href);
     url.searchParams.set("comment", props.id.toString());
@@ -55,19 +54,19 @@ export default function HNComment(props: HNCommentProps) {
   };
 
   return (
-    <div ref={(el) => { parent = el; }}>
+    <div ref={(el) => { parent = el; }} class={props.depth ? "ml-[12px]" : ""}>
       <Switch>
         <Match when={(commentStatus.state === "unresolved" || commentStatus.state === "pending") && !props.isHidden}>
-          <div class="dark:bg-poimandres-dark h-24 p-2 rounded-lg mt-4" style={{ "margin-left": leftMargin }}>
+          <Card>
             <div class="rounded-lg bg-300% animate-gradient bg-gradient-to-r from-gray-600 to-gray-800 h-4 w-4/12"></div>
             <div class="rounded-lg bg-300% animate-gradient bg-gradient-to-r from-gray-600 to-gray-900 h-4 w-full mt-3"></div>
             <div class="rounded-lg bg-300% animate-gradient bg-gradient-to-r from-gray-700 to-gray-800 h-4 w-9/12 mt-3"></div>
-          </div>
+          </Card>
         </Match>
         <Match when={(commentStatus.error === "error" || commentStatus()?.error) && !props.isHidden}>
-          <div class="dark:bg-poimandres-dark p-2 rounded-lg mt-4 " style={{ "margin-left": leftMargin }}>
+          <Card>
             <RetryCard onRetry={refetch} />
-          </div>
+          </Card>
         </Match>
         <Match when={comment() && comment().type === "comment" && !comment().deleted}>
           <div>
@@ -75,7 +74,7 @@ export default function HNComment(props: HNCommentProps) {
               setTimeout(() => d(), 300);
             }} appear >
               <Show when={!props.isHidden} keyed>
-                <div class="dark:bg-poimandres-dark p-2 rounded-lg mt-4 border border-gray-700" style={{ "margin-left": leftMargin }}>
+                <Card>
                   <div class="flex flex-wrap">
                     <h4 class="text-gray-400 mr-4">{comment().by}</h4>
                     <a class="text-gray-400 mr-4 hover:underline" href={enterThread()}>{dayjs().to((comment().time ?? 0) * 1000)}</a>
@@ -91,22 +90,22 @@ export default function HNComment(props: HNCommentProps) {
                       <div ref={setText} class="text-gray-200 break-words inline-block"></div>
                     </Show>
                   </TransitionGroup>
-                </div>
+                </Card>
                 <Show when={props.depth >= MAX_DEPTH && comment().kids}>
-                  <div class="dark:bg-poimandres-dark p-2 rounded-lg mt-4" style={{ "margin-left": leftMargin }}>
+                  <Card>
                     <div class="flex flex-wrap">
                       <a class="p-1 cursor-pointer flex items-center justify-center hover:underline text-blue-400" href={enterThread()}>
                         Continue thread
                         <IconChevronsRight class="text-blue-400 inline" size="22" />
                       </a>
                     </div>
-                  </div>
+                  </Card>
                 </Show>
               </Show>
             </TransitionGroup>
             <Show when={comment().kids && props.depth < MAX_DEPTH && props.isRecursive} keyed>
               <div class="relative">
-                <div class="h-full absolute bg-poimandres-dark" style={{ "width": "2px", "margin-left": leftMargin }}></div>
+                <div class="h-full absolute bg-gray-700 rounded-xl" style={{ "width": "1px" }}></div>
                 <HNComments depth={props.depth + 1} comments={comment().kids} hide={props.isHidden || !isExpanded()} />
               </div>
             </Show>

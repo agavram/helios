@@ -45,7 +45,7 @@ export default function NavItems({ selected }: NavItemsProps) {
             <div class="flex gap-1 max-md:flex-col py-1">
               <a
                 href="/top"
-                class={"flex justify-between items-center gap-2 text-gray-300 max-md:px-4 p-2 hover:underline hover:bg-poimandres-lighter rounded " + (selected === "top" ? " bg-poimandres-lighter" : "")}
+                class={"flex justify-between items-center gap-2 text-gray-300 max-md:px-4 p-2 hover:underline hover:bg-poimandres-main rounded " + (selected === "top" ? " bg-poimandres-main" : "")}
                 role="menuitem"
               >
                 Top
@@ -53,7 +53,7 @@ export default function NavItems({ selected }: NavItemsProps) {
               </a>
               <a
                 href="/best"
-                class={"flex justify-between items-center gap-2 text-gray-300 max-md:px-4 p-2 hover:underline hover:bg-poimandres-lighter rounded " + (selected === "best" ? " bg-poimandres-lighter" : "")}
+                class={"flex justify-between items-center gap-2 text-gray-300 max-md:px-4 p-2 hover:underline hover:bg-poimandres-main rounded " + (selected === "best" ? " bg-poimandres-main" : "")}
                 role="menuitem"
               >
                 Best
@@ -61,7 +61,7 @@ export default function NavItems({ selected }: NavItemsProps) {
               </a>
               <a
                 href="/new"
-                class={"flex justify-between items-center gap-2 text-gray-300 max-md:px-4 p-2 hover:underline hover:bg-poimandres-lighter rounded " + (selected === "new" ? " bg-poimandres-lighter" : "")}
+                class={"flex justify-between items-center gap-2 text-gray-300 max-md:px-4 p-2 hover:underline hover:bg-poimandres-main rounded " + (selected === "new" ? " bg-poimandres-main" : "")}
                 role="menuitem"
               >
                 New
@@ -69,21 +69,21 @@ export default function NavItems({ selected }: NavItemsProps) {
               </a>
               <a
                 href="/ask"
-                class={"flex justify-between items-center gap-2 text-gray-300 max-md:px-4 p-2 hover:underline hover:bg-poimandres-lighter rounded " + (selected === "ask" ? " bg-poimandres-lighter" : "")}
+                class={"flex justify-between items-center gap-2 text-gray-300 max-md:px-4 p-2 hover:underline hover:bg-poimandres-main rounded " + (selected === "ask" ? " bg-poimandres-main" : "")}
                 role="menuitem"
               >
                 Ask
                 <IconMicrophone2 class="text-gray-200" size={20} />
               </a>
               <a href="/show"
-                class={"flex justify-between items-center gap-2 text-gray-300 max-md:px-4 p-2 hover:underline hover:bg-poimandres-lighter rounded " + (selected === "show" ? " bg-poimandres-lighter" : "")}
+                class={"flex justify-between items-center gap-2 text-gray-300 max-md:px-4 p-2 hover:underline hover:bg-poimandres-main rounded " + (selected === "show" ? " bg-poimandres-main" : "")}
                 role="menuitem"
               >
                 Show
                 <IconTheater class="text-gray-200" size={20} />
               </a>
               <a href="/jobs"
-                class={"flex justify-between items-center gap-2 text-gray-300 max-md:px-4 p-2 hover:underline hover:bg-poimandres-lighter rounded " + (selected === "jobs" ? " bg-poimandres-lighter" : "")}
+                class={"flex justify-between items-center gap-2 text-gray-300 max-md:px-4 p-2 hover:underline hover:bg-poimandres-main rounded " + (selected === "jobs" ? " bg-poimandres-main" : "")}
                 role="menuitem"
               >
                 Jobs

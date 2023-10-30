@@ -10,7 +10,8 @@ module.exports = {
 		extend: {
 			colors: {
 				'poimandres': {
-					dark: '#1B1E28',
+					dark: '#13151a',
+					main: '#1B1E28',
 					lighter: '#2B2E3B',
 				},
 			},
