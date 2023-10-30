@@ -75,10 +75,10 @@ export default function HNComment(props: HNCommentProps) {
               setTimeout(() => d(), 300);
             }} appear >
               <Show when={!props.isHidden} keyed>
-                <div class="dark:bg-poimandres-dark p-2 rounded-lg mt-4" style={{ "margin-left": leftMargin }}>
+                <div class="dark:bg-poimandres-dark p-2 rounded-lg mt-4 border border-gray-700" style={{ "margin-left": leftMargin }}>
                   <div class="flex flex-wrap">
                     <h4 class="text-gray-400 mr-4">{comment().by}</h4>
-                    <h4 class="text-gray-400 mr-4">{dayjs().to((comment().time ?? 0) * 1000)}</h4>
+                    <a class="text-gray-400 mr-4 hover:underline" href={enterThread()}>{dayjs().to((comment().time ?? 0) * 1000)}</a>
                     <div class="flex-grow"></div>
                     <button class="p-1 cursor-pointer" onclick={() => setIsExpanded(isExpanded => !isExpanded)}>
                       <IconX size="16" stroke="2.5" class={"text-gray-300 mr-1 transition " + (!isExpanded() ? "rotate-135" : "")} />

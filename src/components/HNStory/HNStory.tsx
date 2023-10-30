@@ -82,10 +82,8 @@ export default function Story({ id, isHeader, rootCommentId }: StoryProps) {
         </Match>
         <Match when={story() && (story().type === "story" || story().type === "job")}>
           <>
-            <TransitionGroup name="comment" onExit={(_, d) => {
-              setTimeout(() => d(), 300);
-            }} appear>
-              <div class="dark:bg-poimandres-dark p-2 rounded-lg" >
+            <TransitionGroup name="comment" appear>
+              <div class="dark:bg-poimandres-dark p-2 rounded-lg border border-gray-500 hover:border-gray-50 transition-[border]" >
                 <div class="pb-2">
                   <a href={url()} class={"text-gray-50 hover:underline break-words mr-2 inline-block " + (isHeader ? "text-lg" : "")}>
                     {story().title}
