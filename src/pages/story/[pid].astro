@@ -2,25 +2,32 @@
 import StoryCard from '../../components/HNStory/HNStory';
 import Layout from '../../layouts/Layout.astro';
 import Nav from '../../layouts/Nav.astro';
+import Unknown from '../404.astro';
 
 const { pid } = Astro.params;
 
-const pidInt = parseInt(pid ?? '', 10);
+const pidInt = parseInt(pid ?? '');
 
 const commentString = Astro.url.searchParams.get('comment');
 const comment = commentString ? parseInt(commentString, 10) : undefined;
 ---
 
-<Layout title="...">
-  <main>
-    <Nav />
-    <div class="p-4 max-w-4xl ml-auto mr-auto">
-      <StoryCard
-        id={pidInt}
-        isHeader
-        rootCommentId={comment}
-        client:visible
-      />
-    </div>
-  </main>
-</Layout>
+{
+  isNaN(pidInt) ? (
+    <Unknown />
+  ) : (
+    <Layout title="Hacker News">
+      <main>
+        <Nav />
+        <div class="p-4 max-w-4xl ml-auto mr-auto">
+          <StoryCard
+            id={pidInt}
+            isHeader
+            rootCommentId={comment}
+            client:visible
+          />
+        </div>
+      </main>
+    </Layout>
+  )
+}

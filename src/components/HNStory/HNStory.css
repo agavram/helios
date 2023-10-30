@@ -6,25 +6,6 @@ p a {
   color: theme("colors.slate.400") !important;
 }
 
-.parent {
-  position: relative;
-}
-
-.animate-fade {
-  animation: fade-and-move 500ms forwards;
-}
-
-@keyframes fade-and-move {
-  0% {
-    opacity: 1;
-    max-height: 100vh;
-  }
-  100% {
-    opacity: 0;
-    max-height: 0;
-  }
-}
-
 .comment-enter-active,
 .comment-exit-active {
   transition: opacity 0.3s, transform 0.3s;
@@ -37,21 +18,21 @@ p a {
 }
 
 .comment-enter {
-  transform: translateX(-10px);
+  transform: translateX(-25px);
 }
 
-.comment-text-enter-active,
-.comment-text-exit-active {
+.fade-enter-active,
+.fade-exit-active {
   transition: opacity 0.3s, transform 0.3s;
 }
 
-.comment-text-enter,
-.comment-text-exit-to {
+.fade-enter,
+.fade-exit-to {
   transform: scale(0.9);
   opacity: 0;
 }
 
-.comment-text-enter {
+.fade-enter {
   transform: scale(0.9);
 }
 

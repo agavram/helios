@@ -1,5 +1,5 @@
 ---
-import { ErrorItem } from '../components/Errors/ErrorItem';
+import type { GetStaticPaths } from 'astro';
 import HNStory from '../components/HNStory/HNStory';
 import Layout from '../layouts/Layout.astro';
 import Nav from '../layouts/Nav.astro';
@@ -10,45 +10,51 @@ import {
   getNewStories,
   getShowStories,
   getTopStories,
-  type Response,
-  type StoryId,
 } from '../services/data';
+import type { Response } from '../services/data';
+import { ErrorItem } from '../components/Errors/ErrorItem';
 
-const { page } = Astro.params;
-let stories: Response<StoryId[]>;
-let title = "";
+export const prerender = true;
 
-switch (page?.toLowerCase()) {
-  case 'new':
-    stories = await getNewStories();
-    title = "New Stories";
-    break;
-  case 'best':
-    stories = await getBestStories();
-    title = "Best Stories";
-    break;
-  case 'top':
-    stories = await getTopStories();
-    title = "Top Stories";
-    break;
-  case 'ask':
-    stories = await getAskStories();
-    title = "Ask";
-    break;
-  case 'show':
-    stories = await getShowStories();
-    title = "Show";
-    break;
-  case 'jobs':
-    stories = await getJobStories();
-    title = "Jobs";
-    break;
-  default:
-    return Astro.redirect('/404');
+interface Props {
+  title: string;
+  provider: () => Promise<Response<number[]>>;
 }
+
+export const getStaticPaths = (async () => {
+  return [
+    {
+      params: { page: 'new' },
+      props: { title: 'New Stories', provider: getNewStories },
+    },
+    {
+      params: { page: 'best' },
+      props: { title: 'Best Stories', provider: getBestStories },
+    },
+    {
+      params: { page: 'top' },
+      props: { title: 'Top Stories', provider: getTopStories },
+    },
+    {
+      params: { page: 'ask' },
+      props: { title: 'Ask', provider: getAskStories },
+    },
+    {
+      params: { page: 'show' },
+      props: { title: 'Show', provider: getShowStories },
+    },
+    {
+      params: { page: 'jobs' },
+      props: { title: 'Jobs', provider: getJobStories },
+    },
+  ];
+}) satisfies GetStaticPaths;
+
+const { title, provider } = Astro.props;
+const stories = await provider();
 ---
 
-<Layout title={title + " | Hacker News"}>
+<Layout title={title + ' | Hacker News'}>
   <main>
     <Nav />
     {
@@ -72,4 +78,3 @@ switch (page?.toLowerCase()) {
     }
   </main>
 </Layout>
-../components/Errors/ErrorItem

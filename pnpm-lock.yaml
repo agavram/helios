@@ -20,6 +20,9 @@ dependencies:
   '@fontsource-variable/sora':
     specifier: ^5.0.8
     version: 5.0.8
+  '@tabler/icons-solidjs':
+    specifier: ^2.40.0
+    version: 2.40.0(solid-js@1.7.11)
   astro:
     specifier: ^3.0.6
     version: 3.0.6
@@ -1974,6 +1977,19 @@ packages:
       json5: 2.2.3
       magic-string: 0.25.9
       string.prototype.matchall: 4.0.9
+    dev: false
+
+  /@tabler/icons-solidjs@2.40.0(solid-js@1.7.11):
+    resolution: {integrity: sha512-sDpggd6cCm6bVsYF/Lldt7S3Ediwq+TLCzU7PfMEQCUkjBh9qHeAW/MwiKXd7SUOea4CRgk3de1kv7CXLs+1bg==}
+    peerDependencies:
+      solid-js: ^1.4.7
+    dependencies:
+      '@tabler/icons': 2.40.0
+      solid-js: 1.7.11
+    dev: false
+
+  /@tabler/icons@2.40.0:
+    resolution: {integrity: sha512-VqKsBSX159cLFTnCzkCmGhZtSPJHNN0lM2sC4xe0HPOfPUnjiex7rDHDdut4oe4iKRecDDpwXwM9BcU6xCPlCg==}
     dev: false
 
   /@types/babel__core@7.20.1:

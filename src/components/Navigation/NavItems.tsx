@@ -1,6 +1,7 @@
 import { Show, createSignal, onMount } from "solid-js";
 import { TransitionGroup } from "solid-transition-group";
 import "./NavItems.css";
+import { IconClockHour3, IconFileDescription, IconMenu2, IconMicrophone2, IconSortAscending, IconStar, IconTheater } from "@tabler/icons-solidjs";
 
 export interface NavItemsProps {
   selected?: string | undefined;
@@ -32,9 +33,7 @@ export default function NavItems({ selected }: NavItemsProps) {
         class="block md:hidden"
         onClick={() => setIsExpanded(isExpanded => !isExpanded)}
       >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-200" viewBox="0 0 448 512" fill="currentColor">
-          <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z" />
-        </svg>
+        <IconMenu2 class="text-gray-200" />
       </button>
       <TransitionGroup name="nav-dropdown" onExit={(_, d) => {
         setTimeout(() => d(), 300);
@@ -46,43 +45,49 @@ export default function NavItems({ selected }: NavItemsProps) {
             <div class="flex gap-1 max-md:flex-col py-1">
               <a
                 href="/top"
-                class={"text-gray-300 block max-md:px-4 p-2 hover:underline hover:bg-poimandres-lighter rounded " + (selected === "top" ? " bg-poimandres-lighter" : "")}
+                class={"flex justify-between items-center gap-2 text-gray-300 max-md:px-4 p-2 hover:underline hover:bg-poimandres-lighter rounded " + (selected === "top" ? " bg-poimandres-lighter" : "")}
                 role="menuitem"
               >
                 Top
+                <IconSortAscending class="text-gray-200" size={20} />
               </a>
               <a
                 href="/best"
-                class={"text-gray-300 block max-md:px-4 p-2 hover:underline hover:bg-poimandres-lighter rounded " + (selected === "best" ? " bg-poimandres-lighter" : "")}
+                class={"flex justify-between items-center gap-2 text-gray-300 max-md:px-4 p-2 hover:underline hover:bg-poimandres-lighter rounded " + (selected === "best" ? " bg-poimandres-lighter" : "")}
                 role="menuitem"
               >
                 Best
+                <IconStar class="text-gray-200" size={20} />
               </a>
               <a
                 href="/new"
-                class={"text-gray-300 block max-md:px-4 p-2 hover:underline hover:bg-poimandres-lighter rounded " + (selected === "new" ? " bg-poimandres-lighter" : "")}
+                class={"flex justify-between items-center gap-2 text-gray-300 max-md:px-4 p-2 hover:underline hover:bg-poimandres-lighter rounded " + (selected === "new" ? " bg-poimandres-lighter" : "")}
                 role="menuitem"
               >
                 New
+                <IconClockHour3 class="text-gray-200" size={20} />
               </a>
               <a
                 href="/ask"
-                class={"text-gray-300 block max-md:px-4 p-2 hover:underline hover:bg-poimandres-lighter rounded " + (selected === "ask" ? " bg-poimandres-lighter" : "")}
+                class={"flex justify-between items-center gap-2 text-gray-300 max-md:px-4 p-2 hover:underline hover:bg-poimandres-lighter rounded " + (selected === "ask" ? " bg-poimandres-lighter" : "")}
                 role="menuitem"
               >
                 Ask
+                <IconMicrophone2 class="text-gray-200" size={20} />
               </a>
               <a href="/show"
-                class={"text-gray-300 block max-md:px-4 p-2 hover:underline hover:bg-poimandres-lighter rounded " + (selected === "show" ? " bg-poimandres-lighter" : "")}
+                class={"flex justify-between items-center gap-2 text-gray-300 max-md:px-4 p-2 hover:underline hover:bg-poimandres-lighter rounded " + (selected === "show" ? " bg-poimandres-lighter" : "")}
                 role="menuitem"
               >
                 Show
+                <IconTheater class="text-gray-200" size={20} />
               </a>
               <a href="/jobs"
-                class={"text-gray-300 block max-md:px-4 p-2 hover:underline hover:bg-poimandres-lighter rounded " + (selected === "jobs" ? " bg-poimandres-lighter" : "")}
+                class={"flex justify-between items-center gap-2 text-gray-300 max-md:px-4 p-2 hover:underline hover:bg-poimandres-lighter rounded " + (selected === "jobs" ? " bg-poimandres-lighter" : "")}
                 role="menuitem"
               >
                 Jobs
+                <IconFileDescription class="text-gray-200" size={20} />
               </a>
             </div>
           </div>
