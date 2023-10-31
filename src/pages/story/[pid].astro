@@ -19,7 +19,7 @@ const story = await getStory(pidInt);
   isNaN(pidInt) ? (
     <Unknown />
   ) : (
-    <Layout title="Hacker News">
+    <Layout title={story.data?.title ? story.data.title : "Hacker News"}>
       <main>
         <Nav />
         <div class="p-4 max-w-4xl ml-auto mr-auto">
