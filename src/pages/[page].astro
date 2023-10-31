@@ -59,11 +59,9 @@ const stories = await provider();
     <Nav />
     {
       stories.data && (
-        <div class="px-4 pb-4 max-w-4xl ml-auto mr-auto overflow-hidden">
+        <div class="px-4 py-4 max-w-4xl ml-auto mr-auto overflow-hidden flex flex-col gap-4">
           {stories.data.slice(0, 50).map((storyId) => (
-            <div class="pt-4">
-              <HNStory id={storyId} client:visible />
-            </div>
+            <HNStory id={storyId} client:visible />
           ))}
         </div>
       )

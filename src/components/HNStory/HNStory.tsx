@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { Match, Show, Switch, createEffect, createResource, createSignal } from "solid-js";
-import { getStory, type StoryId } from "../../services/data";
+import { Match, Show, Switch, createEffect, createResource, createSignal, type InitializedResourceOptions } from "solid-js";
+import { getStory, type Story, type StoryId } from "../../services/data";
 import { ErrorItem } from "../Errors/ErrorItem";
 import HNComments from "../HNComment/HNComments";
 import "./HNStory.css";
@@ -9,6 +9,7 @@ import RetryCard from "../Errors/Retry";
 import { IconArrowBackUp } from "@tabler/icons-solidjs";
 import { TransitionGroup } from "solid-transition-group";
 import Card from "../Elements/Card";
+import type { Response } from "../../services/data";
 
 dayjs.extend(relativeTime);
 
@@ -16,12 +17,14 @@ interface FullStory {
   id: StoryId;
   isHeader: true;
   rootCommentId: number | undefined;
+  ssrStory: Response<Story>;
 }
 
 interface InlineStory {
   id: StoryId;
   isHeader?: false;
   rootCommentId?: never;
+  ssrStory?: never;
 }
 
 export type StoryProps = FullStory | InlineStory;
@@ -37,8 +40,12 @@ const shortenUrl = (url: string) => {
   return url.substring(0, i);
 };
 
-export default function Story({ id, isHeader, rootCommentId }: StoryProps) {
-  const [storyStatus, { refetch }] = createResource(id, getStory);
+export default function Story({ id, isHeader, rootCommentId, ssrStory }: StoryProps) {
+  const [storyStatus, { refetch }] = createResource(id, getStory, ssrStory ? {
+    initialValue: ssrStory,
+    ssrLoadFrom: "initial"
+  } : {});
+
   const [text, setText] = createSignal<HTMLHeadingElement>();
 
   const story = () => storyStatus()?.data!;
@@ -70,10 +77,11 @@ export default function Story({ id, isHeader, rootCommentId }: StoryProps) {
     <>
       <Switch>
         <Match when={storyStatus.state === "pending" || storyStatus.state === "unresolved"}>
-          <div class="dark:bg-poimandres-dark h-[72px] p-2 rounded-lg">
+          <Card>
             <div class="rounded-lg bg-300% animate-gradient bg-gradient-to-r from-gray-600 to-gray-800 h-4 w-4/12"></div>
             <div class="rounded-lg bg-300% animate-gradient bg-gradient-to-r from-gray-600 to-gray-900 h-4 w-full mt-3"></div>
-          </div>
+            <div class="rounded-lg bg-300% animate-gradient bg-gradient-to-r from-gray-600 to-gray-800 h-4 w-8/12 mt-3"></div>
+          </Card>
         </Match>
         <Match when={storyStatus()?.error || storyStatus.error}>
           <ErrorItem
@@ -124,9 +132,7 @@ export default function Story({ id, isHeader, rootCommentId }: StoryProps) {
           />
         </Match>
         <Match when={true}>
-          <div class="dark:bg-poimandres-dark p-2 rounded-lg">
-            <RetryCard onRetry={refetch} />
-          </div>
+          <RetryCard onRetry={refetch} />
         </Match>
       </Switch>
     </>

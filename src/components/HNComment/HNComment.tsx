@@ -57,23 +57,25 @@ export default function HNComment(props: HNCommentProps) {
     <div ref={(el) => { parent = el; }} class={props.depth ? "ml-[12px]" : ""}>
       <Switch>
         <Match when={(commentStatus.state === "unresolved" || commentStatus.state === "pending") && !props.isHidden}>
-          <Card>
-            <div class="rounded-lg bg-300% animate-gradient bg-gradient-to-r from-gray-600 to-gray-800 h-4 w-4/12"></div>
-            <div class="rounded-lg bg-300% animate-gradient bg-gradient-to-r from-gray-600 to-gray-900 h-4 w-full mt-3"></div>
-            <div class="rounded-lg bg-300% animate-gradient bg-gradient-to-r from-gray-700 to-gray-800 h-4 w-9/12 mt-3"></div>
-          </Card>
+          <div class="mt-4">
+            <Card>
+              <div class="rounded-lg bg-300% animate-gradient bg-gradient-to-r from-gray-600 to-gray-800 h-4 w-4/12"></div>
+              <div class="rounded-lg bg-300% animate-gradient bg-gradient-to-r from-gray-600 to-gray-900 h-4 w-full mt-3"></div>
+              <div class="rounded-lg bg-300% animate-gradient bg-gradient-to-r from-gray-700 to-gray-800 h-4 w-9/12 mt-3"></div>
+            </Card>
+          </div>
         </Match>
         <Match when={(commentStatus.error === "error" || commentStatus()?.error) && !props.isHidden}>
-          <Card>
+          <div class="mt-4">
             <RetryCard onRetry={refetch} />
-          </Card>
+          </div>
         </Match>
         <Match when={comment() && comment().type === "comment" && !comment().deleted}>
-          <div>
-            <TransitionGroup name="comment" onExit={(_, d) => {
-              setTimeout(() => d(), 300);
-            }} appear >
-              <Show when={!props.isHidden} keyed>
+          <TransitionGroup name="comment" onExit={(_, d) => {
+            setTimeout(() => d(), 300);
+          }} appear >
+            <Show when={!props.isHidden} keyed>
+              <div class="mt-4">
                 <Card>
                   <div class="flex flex-wrap">
                     <h4 class="text-gray-400 mr-4">{comment().by}</h4>
@@ -87,11 +89,13 @@ export default function HNComment(props: HNCommentProps) {
                     setTimeout(() => d(), 300);
                   }} appear>
                     <Show when={isExpanded()} keyed>
-                      <div ref={setText} class="text-gray-200 inline-block" style={{ "overflow-wrap": "anywhere"}}></div>
+                      <div ref={setText} class="text-gray-200 inline-block" style={{ "overflow-wrap": "anywhere" }}></div>
                     </Show>
                   </TransitionGroup>
                 </Card>
-                <Show when={props.depth >= MAX_DEPTH && comment().kids}>
+              </div>
+              <Show when={props.depth >= MAX_DEPTH && comment().kids}>
+                <div class="mt-4">
                   <Card>
                     <div class="flex flex-wrap">
                       <a class="p-1 cursor-pointer flex items-center justify-center hover:underline text-blue-400" href={enterThread()}>
@@ -100,16 +104,16 @@ export default function HNComment(props: HNCommentProps) {
                       </a>
                     </div>
                   </Card>
-                </Show>
+                </div>
               </Show>
-            </TransitionGroup>
-            <Show when={comment().kids && props.depth < MAX_DEPTH && props.isRecursive} keyed>
-              <div class="relative">
-                <div class="h-full absolute bg-gray-700 rounded-xl" style={{ "width": "1px" }}></div>
-                <HNComments depth={props.depth + 1} comments={comment().kids} hide={props.isHidden || !isExpanded()} />
-              </div>
             </Show>
-          </div>
+          </TransitionGroup>
+          <Show when={comment().kids && props.depth < MAX_DEPTH && props.isRecursive} keyed>
+            <div class="relative">
+              <div class="h-full absolute bg-gray-700 rounded-xl" style={{ "width": "1px" }}></div>
+              <HNComments depth={props.depth + 1} comments={comment().kids} hide={props.isHidden || !isExpanded()} />
+            </div>
+          </Show>
         </Match>
       </Switch>
     </div>

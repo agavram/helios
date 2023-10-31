@@ -12,8 +12,8 @@ export default function HNComments(props: HNCommentsProps) {
   const { depth, comments } = props;
 
   return (
-    <For each={comments}>{(comment) => (
-      <HNComment depth={depth} id={comment} isHidden={props.hide} isRecursive={true} />
-    )}</For>
+    <For each={comments}>{(comment) =>
+      <HNComment depth={depth} id={comment} isHidden={props.hide} isRecursive={true} />}
+    </For>
   );
 }
