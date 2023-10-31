@@ -1,15 +1,14 @@
 import dayjs from "dayjs";
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { Match, Show, Switch, createEffect, createResource, createSignal, type InitializedResourceOptions } from "solid-js";
+import { Match, Show, Switch, createEffect, createResource, createSignal } from "solid-js";
+import { TransitionGroup } from "solid-transition-group";
+import type { Response } from "../../services/data";
 import { getStory, type Story, type StoryId } from "../../services/data";
+import Card from "../Elements/Card";
 import { ErrorItem } from "../Errors/ErrorItem";
+import RetryCard from "../Errors/Retry";
 import HNComments from "../HNComment/HNComments";
 import "./HNStory.css";
-import RetryCard from "../Errors/Retry";
-import { IconArrowBackUp } from "@tabler/icons-solidjs";
-import { TransitionGroup } from "solid-transition-group";
-import Card from "../Elements/Card";
-import type { Response } from "../../services/data";
 
 dayjs.extend(relativeTime);
 
@@ -45,6 +44,9 @@ export default function Story({ id, isHeader, rootCommentId, ssrStory }: StoryPr
     initialValue: ssrStory,
     ssrLoadFrom: "initial"
   } : {});
+
+  const isClient = () => !import.meta.env.SSR;
+
 
   const [text, setText] = createSignal<HTMLHeadingElement>();
 
@@ -112,14 +114,20 @@ export default function Story({ id, isHeader, rootCommentId, ssrStory }: StoryPr
             </TransitionGroup>
             <Show when={isHeader && story().type !== "job"}>
               <Show when={rootCommentId}>
-                <Card>
-                  <div class="flex items-center gap-2">
-                    <IconArrowBackUp class="inline text-blue-400" />
-                    <a class="text-blue-400 hover:underline hover:cursor-pointer" href={"/story/" + id}>
-                      Showing single thread. View full discussion?
-                    </a>
-                  </div>
-                </Card>
+                <div class="pt-4">
+                  <Card>
+                    <div class="flex items-center gap-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="inline text-blue-400" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M9 14l-4 -4l4 -4"></path>
+                        <path d="M5 10h11a4 4 0 1 1 0 8h-1"></path>
+                      </svg>
+                      <a class="text-blue-400 hover:underline hover:cursor-pointer" href={"/story/" + id}>
+                        Showing single thread. View full discussion?
+                      </a>
+                    </div>
+                  </Card>
+                </div>
               </Show>
               <HNComments depth={0} comments={comments()} hide={false} />
             </Show>
