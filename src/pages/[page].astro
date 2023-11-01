@@ -14,8 +14,6 @@ import {
 import type { Response } from '../services/data';
 import { ErrorItem } from '../components/Errors/ErrorItem';
 
-export const prerender = true;
-
 interface Props {
   title: string;
   provider: () => Promise<Response<number[]>>;
