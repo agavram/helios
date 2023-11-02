@@ -96,7 +96,7 @@ export default function Story({ id, isHeader, rootCommentId, ssrStory }: StoryPr
             <TransitionGroup name="comment" appear>
               <div class="dark:bg-[#13151a] p-2 rounded-lg border border-gray-500 hover:border-gray-50 transition-[border]" >
                 <div class="pb-2">
-                  <a href={url()} class={"text-gray-50 hover:underline break-words mr-2 inline-block " + (isHeader ? "text-lg" : "")}>
+                  <a href={url()} class={"text-gray-50 hover:underline break-words mr-2 inline-block" + (isHeader ? " text-lg font-medium" : "")}>
                     {story().title}
                   </a>
                   {story().url && <a href={story().url!} target="_blank" class="text-gray-500 inline hover:underline">({shortenUrl(story().url!)})</a>}
