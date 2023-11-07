@@ -10,7 +10,7 @@ export function useVisibility(element: () => HTMLElement | undefined): Accessor<
         setIsVisible(true);
         observer.unobserve(element()!);
       }
-    }, { rootMargin: "0px 0px 100px 0px "});
+    }, { rootMargin: "0px 0px 100px 0px" });
 
     if (element()) observer.observe(element()!);
 

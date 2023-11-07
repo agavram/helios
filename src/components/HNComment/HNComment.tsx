@@ -10,7 +10,7 @@ import Card from "../Elements/Card";
 
 export interface HNCommentProps {
   depth: number;
-  id: number;
+  id: string;
   isHidden?: boolean;
   isRecursive?: boolean;
 }
@@ -19,8 +19,7 @@ const MAX_DEPTH = 5;
 
 export default function HNComment(props: HNCommentProps) {
   // Used to fetch the comment JIT
-  const [id, setId] = createSignal<number>();
-  const [text, setText] = createSignal<HTMLHeadingElement>();
+  const [id, setId] = createSignal<string>();
 
   // Whether the comment is expanded or not
   const [isExpanded, setIsExpanded] = createSignal(true);
@@ -32,14 +31,6 @@ export default function HNComment(props: HNCommentProps) {
   // Determine whether the comment is in the viewport or not
   let parent: HTMLElement;
   const isVisible = useVisibility(() => parent);
-
-  createEffect(() => {
-    const t = text();
-    if (t) {
-      t.innerHTML = "<p>" + comment()?.text ?? "";
-      t.innerHTML = t.innerHTML.replace(/<p><\/p>/g, "");
-    }
-  });
 
   createEffect(() => {
     if (isVisible() && id() === undefined) {
@@ -89,7 +80,7 @@ export default function HNComment(props: HNCommentProps) {
                     setTimeout(() => d(), 300);
                   }} appear>
                     <Show when={isExpanded()} keyed>
-                      <div ref={setText} class="text-gray-200 inline-block" style={{ "overflow-wrap": "anywhere" }}></div>
+                      <div innerHTML={comment().text} class="text-gray-200 inline-block pt-[6px] comment-block w-full" style={{ "overflow-wrap": "anywhere" }}></div>
                     </Show>
                   </TransitionGroup>
                 </Card>

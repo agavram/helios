@@ -9,13 +9,14 @@ import { ErrorItem } from "../Errors/ErrorItem";
 import RetryCard from "../Errors/Retry";
 import HNComments from "../HNComment/HNComments";
 import "./HNStory.css";
+import { useVisibility } from "../Hooks/useVisiblity";
 
 dayjs.extend(relativeTime);
 
 interface FullStory {
   id: StoryId;
   isHeader: true;
-  rootCommentId: number | undefined;
+  rootCommentId: string | undefined;
   ssrStory: Response<Story>;
 }
 
@@ -39,23 +40,22 @@ const shortenUrl = (url: string) => {
   return url.substring(0, i);
 };
 
-export default function Story({ id, isHeader, rootCommentId, ssrStory }: StoryProps) {
+export default function Story({ id: pid, isHeader, rootCommentId, ssrStory }: StoryProps) {
+  const [id, setId] = createSignal<string>();
+
   const [storyStatus, { refetch }] = createResource(id, getStory, ssrStory ? {
     initialValue: ssrStory,
     ssrLoadFrom: "initial"
   } : {});
 
-  const isClient = () => !import.meta.env.SSR;
-
-
-  const [text, setText] = createSignal<HTMLHeadingElement>();
 
   const story = () => storyStatus()?.data!;
 
+  let parent: HTMLElement;
+  const isVisible = useVisibility(() => parent);
   createEffect(() => {
-    const t = text();
-    if (t) {
-      t.innerHTML = "<p>" + story().text ?? "";
+    if (isVisible() && !ssrStory) {
+      setId(pid);
     }
   });
 
@@ -68,15 +68,15 @@ export default function Story({ id, isHeader, rootCommentId, ssrStory }: StoryPr
     }
   });
 
-  const url = () => story().url ?? `/story/${story().id}`;
+  const url = () => story().url ?? `/story/${pid}`;
   let comments = () => story().kids ?? [];
 
   if (rootCommentId) {
-    comments = () => [rootCommentId];
+    comments = () => ({ "0": rootCommentId });
   }
 
   return (
-    <>
+    <div ref={(el) => { parent = el; }}>
       <Switch>
         <Match when={storyStatus.state === "pending" || storyStatus.state === "unresolved"}>
           <Card>
@@ -102,13 +102,13 @@ export default function Story({ id, isHeader, rootCommentId, ssrStory }: StoryPr
                   {story().url && <a href={story().url!} target="_blank" class="text-gray-500 inline hover:underline">({shortenUrl(story().url!)})</a>}
                 </div>
                 <Show when={isHeader && story().text}>
-                  <div ref={setText} class="text-gray-200 pb-2"></div>
+                  <div innerHTML={story().text!} class="text-gray-200 pb-2" style={{ "overflow-wrap": "anywhere" }}></div>
                 </Show>
                 <div class="flex flex-wrap">
                   <h4 class="text-gray-400 mr-4">{story().by}</h4>
                   <h4 class="text-gray-500 mr-4">{story().score} points</h4>
-                  {story().type !== "job" && <a href={`/story/${story().id}`} class="text-gray-500 mr-4 hover:underline cursor-pointer">{story().descendants} replies</a>}
-                  <a href={`/story/${story().id}`} class="text-gray-500 hover:underline cursor-pointer">{dayjs().to(story().time * 1000)}</a>
+                  {story().type !== "job" && <a href={`/story/${pid}`} class="text-gray-500 mr-4 hover:underline cursor-pointer">{story().descendants} replies</a>}
+                  <a href={`/story/${pid}`} class="text-gray-500 hover:underline cursor-pointer">{dayjs().to(story().time * 1000)}</a>
                 </div>
               </div >
             </TransitionGroup>
@@ -122,7 +122,7 @@ export default function Story({ id, isHeader, rootCommentId, ssrStory }: StoryPr
                         <path d="M9 14l-4 -4l4 -4"></path>
                         <path d="M5 10h11a4 4 0 1 1 0 8h-1"></path>
                       </svg>
-                      <a class="text-blue-400 hover:underline hover:cursor-pointer" href={"/story/" + id}>
+                      <a class="text-blue-400 hover:underline hover:cursor-pointer" href={`/story/${pid}`}>
                         Showing single thread. View full discussion?
                       </a>
                     </div>
@@ -143,6 +143,6 @@ export default function Story({ id, isHeader, rootCommentId, ssrStory }: StoryPr
           <RetryCard onRetry={refetch} />
         </Match>
       </Switch>
-    </>
+    </div>
   );
 }

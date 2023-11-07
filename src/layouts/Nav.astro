@@ -9,7 +9,7 @@ import NavItems from '../components/Navigation/NavItems';
     >
       <a href="/" class="dark:text-gray-50 text-lg pr-6">HACKER NEWS</a>
       <div class="flex-grow"></div>
-      <NavItems selected={Astro.params.page?.toLowerCase()} client:only />
+      <NavItems selected={Astro.params.page?.toLowerCase()} client:only="solid-js" />
     </div>
   </div>
 </nav>

@@ -15,7 +15,7 @@ import {
 
 interface Props {
   title: string;
-  provider: () => Promise<Response<number[]>>;
+  provider: () => Promise<Response<string[]>>;
 }
 
 const paths: { [key: string]: Props } = {
@@ -43,7 +43,7 @@ const stories = await provider();
       stories.data && (
         <div class="px-4 py-4 max-w-4xl ml-auto mr-auto overflow-hidden flex flex-col gap-4">
           {stories.data.slice(0, 50).map((storyId) => (
-            <HNStory id={storyId} client:visible />
+            <HNStory id={storyId.toString()} client:only="solid-js" />
           ))}
         </div>
       )

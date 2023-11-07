@@ -4,7 +4,7 @@ import HNComment from "./HNComment";
 
 export interface HNCommentsProps {
   depth: number;
-  comments: CommentId[];
+  comments: { [key: string]: CommentId }
   hide: boolean;
 }
 
@@ -12,8 +12,8 @@ export default function HNComments(props: HNCommentsProps) {
   const { depth, comments } = props;
 
   return (
-    <For each={comments}>{(comment) =>
-      <HNComment depth={depth} id={comment} isHidden={props.hide} isRecursive={true} />}
+    <For each={Object.keys(comments)}>{(key) =>
+      <HNComment depth={depth} id={comments[key]!} isHidden={props.hide} isRecursive={true} />}
     </For>
   );
 }

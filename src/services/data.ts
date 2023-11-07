@@ -1,14 +1,17 @@
 import f from 'fetch-retry';
+import { initializeApp } from 'firebase/app';
+import { DataSnapshot, child, get, getDatabase, ref } from "firebase/database";
+
 const fetch = f(globalThis.fetch);
 
-export type StoryId = number;
-export type CommentId = number;
+export type StoryId = string;
+export type CommentId = string;
 
 export interface Story {
   by: string;
   descendants: number;
   id: StoryId;
-  kids: CommentId[];
+  kids: { [key: string]: CommentId };
   score: number;
   time: number;
   title: string;
@@ -20,13 +23,27 @@ export interface Story {
 export interface Comment {
   by: string;
   id: CommentId;
-  kids: CommentId[];
+  kids: { [key: string]: CommentId };
   parent: StoryId | CommentId;
   text: string;
   time: number;
   type: "comment";
   deleted?: boolean;
 }
+
+export interface User {
+  id: string;
+  created: number;
+  karma: number;
+  about: string;
+  submitted: number[];
+}
+
+const app = initializeApp({
+  databaseURL: "https://hacker-news.firebaseio.com",
+});
+const database = getDatabase(app);
+const itemsRef = ref(database, "v0/item");
 
 export async function getJobStories() {
   return await tryFetch<StoryId[]>('https://hacker-news.firebaseio.com/v0/jobstories.json');
@@ -53,14 +70,28 @@ export async function getNewStories() {
 }
 
 export async function getStory(id: StoryId) {
-  return await tryFetch<Story>(`https://hacker-news.firebaseio.com/v0/item/${id}.json`);
+  return await tryGet<Story>(get(child(itemsRef, id.toString())));
 }
 
 export async function getComment(id: CommentId) {
-  return await tryFetch<Comment>(`https://hacker-news.firebaseio.com/v0/item/${id}.json`);
+  return await tryGet<Comment>(get(child(itemsRef, id.toString())));
 }
 
-export type Response<T> = { data?: T; error?: undefined } | { error: unknown; data?: undefined };
+export type Response<T> = { data?: T; error?: undefined; } | { error: unknown; data?: undefined; };
+
+export async function tryGet<T>(url: Promise<DataSnapshot>): Promise<Response<T>> {
+  try {
+    const response = await url;
+    // check if response was in 200 range
+    if (!response.exists()) {
+      return { error: "Unable to fetch" };
+    }
+    return { data: response.toJSON()! as T };
+  } catch (error) {
+    return { error };
+  }
+}
+
 
 export async function tryFetch<T>(url: string): Promise<Response<T>> {
   try {

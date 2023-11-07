@@ -1,8 +1,8 @@
-p {
+.comment-block p {
   padding: 6px 0;
 }
 
-p a {
+.comment-block a {
   color: theme("colors.slate.400") !important;
 }
 
@@ -36,11 +36,11 @@ p a {
   transform: scale(0.9);
 }
 
-code {
+.comment-block pre {
+  padding-bottom: 12px;
   white-space: pre-wrap;
-  word-wrap: break-word;
 }
 
-pre {
-  padding: 6px 0;
+.comment-block p:first-of-type {
+  padding-top: 12px;
 }
