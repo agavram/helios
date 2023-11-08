@@ -1,12 +1,13 @@
+import { IconChevronsRight, IconX } from "@tabler/icons-solidjs";
 import dayjs from "dayjs";
 import { Match, Show, Switch, createEffect, createResource, createSignal } from "solid-js";
 import { TransitionGroup } from "solid-transition-group";
 import { getComment } from "../../services/data";
+import Card from "../Elements/Card";
+import LoadingCard from "../Elements/LoadingCard";
+import RetryCard from "../Errors/Retry";
 import { useVisibility } from '../Hooks/useVisiblity';
 import HNComments from "./HNComments";
-import RetryCard from "../Errors/Retry";
-import { IconChevronsRight, IconX } from "@tabler/icons-solidjs";
-import Card from "../Elements/Card";
 
 export interface HNCommentProps {
   depth: number;
@@ -49,11 +50,7 @@ export default function HNComment(props: HNCommentProps) {
       <Switch>
         <Match when={(commentStatus.state === "unresolved" || commentStatus.state === "pending") && !props.isHidden}>
           <div class="mt-4">
-            <Card>
-              <div class="rounded-lg bg-300% animate-gradient bg-gradient-to-r from-gray-600 to-gray-800 h-4 w-4/12"></div>
-              <div class="rounded-lg bg-300% animate-gradient bg-gradient-to-r from-gray-600 to-gray-900 h-4 w-full mt-3"></div>
-              <div class="rounded-lg bg-300% animate-gradient bg-gradient-to-r from-gray-700 to-gray-800 h-4 w-9/12 mt-3"></div>
-            </Card>
+            <LoadingCard />
           </div>
         </Match>
         <Match when={(commentStatus.error === "error" || commentStatus()?.error) && !props.isHidden}>

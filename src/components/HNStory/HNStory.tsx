@@ -5,11 +5,12 @@ import { TransitionGroup } from "solid-transition-group";
 import type { Response } from "../../services/data";
 import { getStory, type Story, type StoryId } from "../../services/data";
 import Card from "../Elements/Card";
+import LoadingCard from "../Elements/LoadingCard";
 import { ErrorItem } from "../Errors/ErrorItem";
 import RetryCard from "../Errors/Retry";
 import HNComments from "../HNComment/HNComments";
-import "./HNStory.css";
 import { useVisibility } from "../Hooks/useVisiblity";
+import "./HNStory.css";
 
 dayjs.extend(relativeTime);
 
@@ -79,11 +80,7 @@ export default function Story({ id: pid, isHeader, rootCommentId, ssrStory }: St
     <div ref={(el) => { parent = el; }}>
       <Switch>
         <Match when={storyStatus.state === "pending" || storyStatus.state === "unresolved"}>
-          <Card>
-            <div class="rounded-lg bg-300% animate-gradient bg-gradient-to-r from-gray-600 to-gray-800 h-4 w-4/12"></div>
-            <div class="rounded-lg bg-300% animate-gradient bg-gradient-to-r from-gray-600 to-gray-900 h-4 w-full mt-3"></div>
-            <div class="rounded-lg bg-300% animate-gradient bg-gradient-to-r from-gray-600 to-gray-800 h-4 w-8/12 mt-3"></div>
-          </Card>
+          <LoadingCard />
         </Match>
         <Match when={storyStatus()?.error || storyStatus.error}>
           <ErrorItem
@@ -94,7 +91,7 @@ export default function Story({ id: pid, isHeader, rootCommentId, ssrStory }: St
         <Match when={story() && (story().type === "story" || story().type === "job")}>
           <>
             <TransitionGroup name="comment" appear>
-              <div class="dark:bg-[#13151a] p-2 rounded-lg border border-gray-500 hover:border-gray-50 transition-[border]" >
+              <div class="dark:bg-poimandres-dark p-2 rounded-lg border border-gray-500 hover:border-gray-50 transition-[border]" >
                 <div class="pb-2">
                   <a href={url()} class={"text-gray-50 hover:underline break-words mr-2 inline-block" + (isHeader ? " text-lg font-medium" : "")}>
                     {story().title}
