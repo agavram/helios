@@ -61,15 +61,15 @@ export default function HNComment(props: HNCommentProps) {
         <Match when={comment() && comment().type === "comment" && !comment().deleted}>
           <TransitionGroup name="comment" onExit={(_, d) => {
             setTimeout(() => d(), 300);
-          }} appear >
+          }} appear>
             <Show when={!props.isHidden} keyed>
               <div class="mt-4">
                 <Card>
-                  <div class="flex flex-wrap">
+                  <div class="flex flex-wrap items-center">
                     <h4 class="text-gray-400 mr-4">{comment().by}</h4>
                     <a class="text-gray-400 mr-4 hover:underline" href={enterThread()}>{dayjs().to((comment().time ?? 0) * 1000)}</a>
                     <div class="flex-grow"></div>
-                    <button class="p-1 cursor-pointer" onclick={() => setIsExpanded(isExpanded => !isExpanded)}>
+                    <button class="cursor-pointer" onclick={() => setIsExpanded(isExpanded => !isExpanded)}>
                       <IconX size="16" stroke="2.5" class={"text-gray-300 mr-1 transition " + (!isExpanded() ? "rotate-135" : "")} />
                     </button>
                   </div>

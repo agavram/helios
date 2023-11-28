@@ -45,49 +45,49 @@ export default function NavItems({ selected }: NavItemsProps) {
             <div class="flex gap-1 max-md:flex-col py-1">
               <a
                 href="/top"
-                class={"flex justify-between items-center gap-2 text-gray-300 max-md:px-4 p-2 hover:underline hover:bg-poimandres-main rounded " + (selected === "top" ? " bg-poimandres-main" : "")}
+                class={"flex justify-between items-center gap-2 max-md:px-4 p-2 transition-[color] hover:text-gray-300 rounded " + (selected === "top" ? " text-gray-100" : "text-gray-500")}
                 role="menuitem"
               >
                 Top
-                <IconSortAscending class="text-gray-200" size={20} />
+                <IconSortAscending size={20} />
               </a>
               <a
                 href="/best"
-                class={"flex justify-between items-center gap-2 text-gray-300 max-md:px-4 p-2 hover:underline hover:bg-poimandres-main rounded " + (selected === "best" ? " bg-poimandres-main" : "")}
+                class={"flex justify-between items-center gap-2 max-md:px-4 p-2 transition-[color] hover:text-gray-300 rounded " + (selected === "best" ? " text-gray-100" : "text-gray-500")}
                 role="menuitem"
               >
                 Best
-                <IconStar class="text-gray-200" size={20} />
+                <IconStar size={20} />
               </a>
               <a
                 href="/new"
-                class={"flex justify-between items-center gap-2 text-gray-300 max-md:px-4 p-2 hover:underline hover:bg-poimandres-main rounded " + (selected === "new" ? " bg-poimandres-main" : "")}
+                class={"flex justify-between items-center gap-2 max-md:px-4 p-2 transition-[color] hover:text-gray-300 rounded " + (selected === "new" ? " text-gray-100" : "text-gray-500")}
                 role="menuitem"
               >
                 New
-                <IconClockHour3 class="text-gray-200" size={20} />
+                <IconClockHour3 size={20} />
               </a>
               <a
                 href="/ask"
-                class={"flex justify-between items-center gap-2 text-gray-300 max-md:px-4 p-2 hover:underline hover:bg-poimandres-main rounded " + (selected === "ask" ? " bg-poimandres-main" : "")}
+                class={"flex justify-between items-center gap-2 max-md:px-4 p-2 transition-[color] hover:text-gray-300 rounded " + (selected === "ask" ? " text-gray-100" : "text-gray-500")}
                 role="menuitem"
               >
                 Ask
-                <IconMicrophone2 class="text-gray-200" size={20} />
+                <IconMicrophone2 size={20} />
               </a>
               <a href="/show"
-                class={"flex justify-between items-center gap-2 text-gray-300 max-md:px-4 p-2 hover:underline hover:bg-poimandres-main rounded " + (selected === "show" ? " bg-poimandres-main" : "")}
+                class={"flex justify-between items-center gap-2 max-md:px-4 p-2 transition-[color] hover:text-gray-300 rounded " + (selected === "show" ? " text-gray-100" : "text-gray-500")}
                 role="menuitem"
               >
                 Show
-                <IconTheater class="text-gray-200" size={20} />
+                <IconTheater size={20} />
               </a>
               <a href="/jobs"
-                class={"flex justify-between items-center gap-2 text-gray-300 max-md:px-4 p-2 hover:underline hover:bg-poimandres-main rounded " + (selected === "jobs" ? " bg-poimandres-main" : "")}
+                class={"flex justify-between items-center gap-2 max-md:px-4 p-2 transition-[color] hover:text-gray-300 rounded " + (selected === "jobs" ? " text-gray-100" : "text-gray-500")}
                 role="menuitem"
               >
                 Jobs
-                <IconFileDescription class="text-gray-200" size={20} />
+                <IconFileDescription size={20} />
               </a>
             </div>
           </div>

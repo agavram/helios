@@ -16,18 +16,23 @@ module.exports = {
 				},
 			},
 			keyframes: {
-        animatedgradient: {
-          '0%': { backgroundPosition: '0% 50%' },
-          '50%': { backgroundPosition: '100% 50%' },
-          '100%': { backgroundPosition: '0% 50%' },
-        },
-      },
-      backgroundSize: {
-        '300%': '300%',
-      },
-      animation: {
-        gradient: 'animatedgradient 6s ease infinite alternate',
-      },
+				animatedgradient: {
+					'0%': { backgroundPosition: '0% 50%' },
+					'50%': { backgroundPosition: '100% 50%' },
+					'100%': { backgroundPosition: '0% 50%' },
+				},
+				shimmer: {
+					"100%": {
+						transform: "translateX(100%)",
+					},
+				},
+			},
+			backgroundSize: {
+				'300%': '300%',
+			},
+			animation: {
+				gradient: 'animatedgradient 6s ease infinite alternate',
+			},
 			rotate: {
 				'135': '135deg'
 			}
@@ -35,4 +40,4 @@ module.exports = {
 	},
 	plugins: [],
 	darkMode: 'class'
-}
+};

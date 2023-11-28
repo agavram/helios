@@ -16,7 +16,7 @@ const story = await getStory(pid ?? '');
     <Layout title={story.data?.title ? story.data.title : 'Hacker News'}>
       <main>
         <Nav />
-        <div class="p-4 max-w-4xl ml-auto mr-auto">
+        <div class="px-2 py-4 max-w-4xl ml-auto mr-auto">
           <StoryCard
             id={pid ?? ""}
             isHeader

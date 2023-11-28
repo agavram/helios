@@ -6,12 +6,13 @@ const fetch = f(globalThis.fetch);
 
 export type StoryId = string;
 export type CommentId = string;
+export type UserId = string;
 
 export interface Story {
   by: string;
   descendants: number;
   id: StoryId;
-  kids: { [key: string]: CommentId };
+  kids: { [key: string]: CommentId; };
   score: number;
   time: number;
   title: string;
@@ -23,7 +24,7 @@ export interface Story {
 export interface Comment {
   by: string;
   id: CommentId;
-  kids: { [key: string]: CommentId };
+  kids: { [key: string]: CommentId; };
   parent: StoryId | CommentId;
   text: string;
   time: number;
@@ -75,6 +76,10 @@ export async function getStory(id: StoryId) {
 
 export async function getComment(id: CommentId) {
   return await tryGet<Comment>(get(child(itemsRef, id.toString())));
+}
+
+export async function getUser(id: UserId) {
+  return await tryGet<User>(get(child(itemsRef, id.toString())));
 }
 
 export type Response<T> = { data?: T; error?: undefined; } | { error: unknown; data?: undefined; };

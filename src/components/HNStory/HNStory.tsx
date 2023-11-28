@@ -82,7 +82,7 @@ export default function Story({ id: pid, isHeader, rootCommentId, ssrStory }: St
         <Match when={storyStatus.state === "pending" || storyStatus.state === "unresolved"}>
           <LoadingCard />
         </Match>
-        <Match when={storyStatus()?.error || storyStatus.error}>
+        <Match when={(storyStatus()?.error || storyStatus.error) && isHeader}>
           <ErrorItem
             title="An error occurred while loading"
             message="Please try again later"

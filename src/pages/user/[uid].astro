@@ -1,0 +1,19 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../layouts/Nav.astro';
+import HNUser from '../../components/HNUser/HNUser';
+import { getUser } from '../../services/data';
+
+const { uid } = Astro.params;
+
+const user = await getUser(uid ?? '');
+---
+
+<Layout title={user.data?.id ? `Profile: ${user.data?.id}` : 'Hacker News'}>
+  <main>
+    <Nav />
+    <div class="px-2 py-4 max-w-4xl ml-auto mr-auto">
+      <HNUser client:only="solid-js" user={user.data} />
+    </div>
+  </main>
+</Layout>
